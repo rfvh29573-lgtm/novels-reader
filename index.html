@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Novel Library - 小說圖書館</title></head>
+<style>
+:root{--bg:#0f0f1a;--card-bg:#1a1a2e;--text:#e8e8f0;--accent:#7c3aed;--gold:#d4a84b;--border:rgba(255,255,255,.06)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Sans TC',-apple-system,sans-serif;background:var(--bg);color:#e8e8f0}
+.header{text-align:center;padding:48px 24px 32px}.header h1{font-size:2.5em;font-weight:700;margin-bottom:8px;color:var(--gold)}.header p{color:#999;font-size:1.05em;letter-spacing:2px}
+.toolbar{max-width:1200px;margin:0 auto 32px;padding:0 24px}.search-box{width:100%;padding:12px 20px;border-radius:12px;border:1px solid var(--border);background:var(--card-bg);color:#e8e8f0;font-size:1em;outline:none}
+.bookshelf{max-width:1200px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+.book-card{background:var(--card-bg);border-radius:16px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:all .4s}
+.book-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 60px rgba(124,58,237,.2),0 0 0 1px var(--accent);border-color:var(--accent)}
+.book-cover{height:160px;display:flex;align-items:center;justify-content:center;font-size:3em}
+.cover-0{background:linear-gradient(135deg,#667eea,#764ba2)}.cover-1{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.cover-2{background:linear-gradient(135deg,#4facfe,#00f2fe)}.cover-3{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.cover-4{background:linear-gradient(135deg,#fa709a,#fee140)}.cover-5{background:linear-gradient(135deg,#a18cd1,#fbc2eb)}
+.cover-6{background:linear-gradient(135deg,#fccb90,#d57eeb)}.cover-7{background:linear-gradient(135deg,#e0c3fc,#8ec5fc)}
+.book-info{padding:20px}.book-title{font-size:1.2em;font-weight:700;margin-bottom:6px;line-height:1.4}
+.book-meta{color:#999;font-size:.85em;display:flex;gap:12px}.footer{text-align:center;padding:30px;color:#999;border-top:1px solid var(--border)}
+@media(max-width:768px){.bookshelf{grid-template-columns:1fr}.header h1{font-size:1.8em}}
+</style>
+<body>
+<div class="header"><h1>Novel Library - 小說圖書館</h1><p>Auto-synced from MIS.AI + Hermes Agent</p></div>
+<div class="toolbar"><input type="text" class="search-box" id="searchBox" placeholder="Search novels..."></div>
+<div class="bookshelf" id="bookshelf"></div>
+<div class="footer">Built with Hermes Agent &middot; <a href="https://github.com/rfvh29573-lgtm/novels-reader" target="_blank" style="color:#7c3aed">GitHub</a></div>
+
+<script id="booksData" type="application/json">[
+  {
+    "title": "雨夜琴弦與琥珀光",
+    "filename": "20260702_1756_雨夜琴弦與琥珀光.md",
+    "size": 5424,
+    "coverIndex": 0,
+    "emoji": "📖"
+  },
+  {
+    "title": "霧瀾閣的迴音",
+    "filename": "20260702_1806_霧瀾閣的迴音.md",
+    "size": 5026,
+    "coverIndex": 1,
+    "emoji": "📕"
+  },
+  {
+    "title": "雨夜書齋的三重奏",
+    "filename": "20260702_1822_雨夜書齋的三重奏.md",
+    "size": 4839,
+    "coverIndex": 2,
+    "emoji": "📗"
+  },
+  {
+    "title": "雲栖夜語",
+    "filename": "20260702_1840_雲栖夜語.md",
+    "size": 3704,
+    "coverIndex": 3,
+    "emoji": "📘"
+  },
+  {
+    "title": "《夜雨鎏金三重奏",
+    "filename": "20260702_1857_《夜雨鎏金三重奏.md",
+    "size": 5134,
+    "coverIndex": 4,
+    "emoji": "📙"
+  },
+  {
+    "title": "暮色雙生：雨夜微光",
+    "filename": "20260702_1915_暮色雙生：雨夜微光.md",
+    "size": 3887,
+    "coverIndex": 5,
+    "emoji": "📓"
+  },
+  {
+    "title": "暮露之契",
+    "filename": "20260702_1932_暮露之契.md",
+    "size": 3716,
+    "coverIndex": 6,
+    "emoji": "📒"
+  },
+  {
+    "title": "第一章：小晴的祕密",
+    "filename": "chapter1.md",
+    "size": 6148,
+    "coverIndex": 7,
+    "emoji": "📔"
+  },
+  {
+    "title": "第二章：公車上的騷擾",
+    "filename": "chapter2.md",
+    "size": 4148,
+    "coverIndex": 0,
+    "emoji": "📖"
+  },
+  {
+    "title": "第三章：霸凌與脅迫",
+    "filename": "chapter3.md",
+    "size": 3797,
+    "coverIndex": 1,
+    "emoji": "📕"
+  },
+  {
+    "title": "第四章：母女共侍",
+    "filename": "chapter4.md",
+    "size": 5819,
+    "coverIndex": 2,
+    "emoji": "📗"
+  },
+  {
+    "title": "小晴的青春期 · 第1章：第1章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_1.md",
+    "size": 4327,
+    "coverIndex": 3,
+    "emoji": "📘"
+  },
+  {
+    "title": "小晴的青春期 · 第10章：第10章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_10.md",
+    "size": 3580,
+    "coverIndex": 4,
+    "emoji": "📙"
+  },
+  {
+    "title": "小晴的青春期 · 第11章：第11章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_11.md",
+    "size": 4579,
+    "coverIndex": 5,
+    "emoji": "📓"
+  },
+  {
+    "title": "小晴的青春期 · 第12章：第12章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_12.md",
+    "size": 5083,
+    "coverIndex": 6,
+    "emoji": "📒"
+  },
+  {
+    "title": "小晴的青春期 · 第13章：第13章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_13.md",
+    "size": 4182,
+    "coverIndex": 7,
+    "emoji": "📔"
+  },
+  {
+    "title": "小晴的青春期 · 第14章：第14章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_14.md",
+    "size": 5426,
+    "coverIndex": 0,
+    "emoji": "📖"
+  },
+  {
+    "title": "小晴的青春期 · 第15章：第15章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_15.md",
+    "size": 3703,
+    "coverIndex": 1,
+    "emoji": "📕"
+  },
+  {
+    "title": "小晴的青春期 · 第16章：第16章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_16.md",
+    "size": 4360,
+    "coverIndex": 2,
+    "emoji": "📗"
+  },
+  {
+    "title": "小晴的青春期 · 第17章：第17章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_17.md",
+    "size": 3411,
+    "coverIndex": 3,
+    "emoji": "📘"
+  },
+  {
+    "title": "小晴的青春期 · 第18章：第18章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_18.md",
+    "size": 3868,
+    "coverIndex": 4,
+    "emoji": "📙"
+  },
+  {
+    "title": "小晴的青春期 · 第2章：第2章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_2.md",
+    "size": 4272,
+    "coverIndex": 5,
+    "emoji": "📓"
+  },
+  {
+    "title": "小晴的青春期 · 第3章：第3章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_3.md",
+    "size": 3704,
+    "coverIndex": 6,
+    "emoji": "📒"
+  },
+  {
+    "title": "小晴的青春期 · 第4章：第4章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_4.md",
+    "size": 4638,
+    "coverIndex": 7,
+    "emoji": "📔"
+  },
+  {
+    "title": "小晴的青春期 · 第5章：第5章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_5.md",
+    "size": 5443,
+    "coverIndex": 0,
+    "emoji": "📖"
+  },
+  {
+    "title": "小晴的青春期 · 第6章：第6章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_6.md",
+    "size": 5466,
+    "coverIndex": 1,
+    "emoji": "📕"
+  },
+  {
+    "title": "小晴的青春期 · 第7章：第7章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_7.md",
+    "size": 4912,
+    "coverIndex": 2,
+    "emoji": "📗"
+  },
+  {
+    "title": "小晴的青春期 · 第8章：第8章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_8.md",
+    "size": 4724,
+    "coverIndex": 3,
+    "emoji": "📘"
+  },
+  {
+    "title": "小晴的青春期 · 第9章：第9章 - 小晴的青春期",
+    "filename": "xiaoqing_series_xiaoqing_chapter_9.md",
+    "size": 4163,
+    "coverIndex": 4,
+    "emoji": "📙"
+  }
+]</script>
+<script>(function(){var books=JSON.parse(document.getElementById('booksData').textContent||'[]');document.getElementById('searchBox').addEventListener('input',function(e){var q=e.target.value.toLowerCase();document.getElementById('bookshelf').innerHTML=books.filter(function(b){return b.title.toLowerCase().indexOf(q)!==-1}).map(function(b){return '<div class="book-card" onclick="window.location.href='read.html?file='+encodeURIComponent(b.filename)+'">'+('<div class="book-cover cover-'+b.coverIndex+'">'+b.emoji+'</div><div class="book-info"><div class="book-title">'+b.title+'</div><div class="book-meta"><span>'+Math.round(b.size/1024*100)/100+' KB</span></div></div>')+'</div>'}).join('')||'<p style="text-align:center;color:#999;padding:60px;width:100%;grid-column:1/-1">No novels found</p>';});})();</script>
+</body></html>

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>{{TITLE}}</title></head>
+<style>:root{--bg:#0f0f1a;--text:#e8e8f0;--accent:#7c3aed;--border:rgba(255,255,255,.06)}*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);line-height:1.9;font-size:18px}.nav-bar{position:sticky;top:0;z-index:100;background:rgba(15,15,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center}.back-btn{background:none;border:1px solid var(--border);color:#e8e8f0;padding:8px 16px;border-radius:8px;text-decoration:none}#content{max-width:760px;margin:0 auto;padding:32px 24px 80px}#content h2{font-size:1.6em;margin:48px 0 16px;color:#e8e8f0;border-left:4px solid var(--accent);padding-left:12px}#content p{margin-bottom:16px;text-align:justify}@media(max-width:768px){body{font-size:16px}#content{padding:24px 16px 60px}}</style>
+<body><div class="nav-bar"><a class="back-btn" href="index.html">Back to Bookshelf</a></div><h1 id="title"></h1><div id="content"></div>
+<script src="https://cdn.jsdelivr.net/npm/marked@5.1.0/marked.min.js"></script>
+<script>(function(){var p=new URLSearchParams(location.search),f=p.get('file');if(!f){document.getElementById('content').innerHTML='<p style="text-align:center;color:#f55">Please select a novel from the bookshelf.</p>';return;}fetch('novels/'+f).then(function(r){return r.text();}).then(function(md){var h=md.match(/^#\s+(.+)$/m);if(h)document.getElementById('title').textContent=h[1];document.getElementById('content').innerHTML=marked.parse(md);});})();</script>
+</body></html>
